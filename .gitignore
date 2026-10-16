@@ -1,1 +1,11 @@
-./cursor/plan.md
+.cursor/plans/
+
+ai/.venv/
+ai/data/**/*.jpg
+ai/data/**/*.jpeg
+ai/data/**/*.png
+ai/fake/**/*.jpg
+ai/fake/**/*.jpeg
+ai/fake/**/*.png
+ai/models/*.pt
+ai/scripts/__pycache__
