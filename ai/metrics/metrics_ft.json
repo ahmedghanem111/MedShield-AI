@@ -1,0 +1,251 @@
+{
+  "checkpoint": "models/best_model_ft.pt",
+  "model": "resnet18",
+  "seed": 42,
+  "label_map": {
+    "real": 0,
+    "fake": 1
+  },
+  "test_overall": {
+    "n": 6210,
+    "accuracy": 0.8578099838969404,
+    "precision": 0.8863016190649445,
+    "recall": 0.9497076023391813,
+    "f1": 0.9169097581631693,
+    "roc_auc": 0.912720922677063,
+    "roc_auc_ci95": [
+      0.9059433982457752,
+      0.919078501292646
+    ],
+    "confusion_matrix": {
+      "labels": [
+        "real",
+        "fake"
+      ],
+      "matrix": [
+        [
+          455,
+          625
+        ],
+        [
+          258,
+          4872
+        ]
+      ]
+    }
+  },
+  "per_attack_row_accuracy": {
+    "copy_region": {
+      "n": 1080,
+      "accuracy": 0.9324074074074075
+    },
+    "gamma": {
+      "n": 1080,
+      "accuracy": 0.9953703703703703
+    },
+    "gaussian_noise": {
+      "n": 1080,
+      "accuracy": 1.0
+    },
+    "lesion_insert": {
+      "n": 1080,
+      "accuracy": 0.950925925925926
+    },
+    "none": {
+      "n": 1080,
+      "accuracy": 0.4212962962962963
+    },
+    "tumor_removal": {
+      "n": 810,
+      "accuracy": 0.8432098765432099
+    }
+  },
+  "per_fake_attack_vs_reals": {
+    "copy_region": {
+      "n": 2160,
+      "accuracy": 0.6768518518518518,
+      "precision": 0.6170343137254902,
+      "recall": 0.9324074074074075,
+      "f1": 0.7426253687315634,
+      "roc_auc": 0.9142781207133059,
+      "roc_auc_ci95": [
+        0.899618303213153,
+        0.9268407985992523
+      ],
+      "confusion_matrix": {
+        "labels": [
+          "real",
+          "fake"
+        ],
+        "matrix": [
+          [
+            455,
+            625
+          ],
+          [
+            73,
+            1007
+          ]
+        ]
+      }
+    },
+    "gamma": {
+      "n": 2160,
+      "accuracy": 0.7083333333333334,
+      "precision": 0.6323529411764706,
+      "recall": 0.9953703703703703,
+      "f1": 0.7733812949640287,
+      "roc_auc": 0.9937397119341562,
+      "roc_auc_ci95": [
+        0.9901831416655023,
+        0.9967561924689315
+      ],
+      "confusion_matrix": {
+        "labels": [
+          "real",
+          "fake"
+        ],
+        "matrix": [
+          [
+            455,
+            625
+          ],
+          [
+            5,
+            1075
+          ]
+        ]
+      }
+    },
+    "gaussian_noise": {
+      "n": 2160,
+      "accuracy": 0.7106481481481481,
+      "precision": 0.6334310850439883,
+      "recall": 1.0,
+      "f1": 0.7755834829443446,
+      "roc_auc": 0.9999579903978053,
+      "roc_auc_ci95": [
+        0.9998987959994251,
+        0.9999931389422722
+      ],
+      "confusion_matrix": {
+        "labels": [
+          "real",
+          "fake"
+        ],
+        "matrix": [
+          [
+            455,
+            625
+          ],
+          [
+            0,
+            1080
+          ]
+        ]
+      }
+    },
+    "lesion_insert": {
+      "n": 2160,
+      "accuracy": 0.6861111111111111,
+      "precision": 0.6216707021791767,
+      "recall": 0.950925925925926,
+      "f1": 0.7518301610541728,
+      "roc_auc": 0.9330889917695473,
+      "roc_auc_ci95": [
+        0.9221291842827762,
+        0.9439551015454759
+      ],
+      "confusion_matrix": {
+        "labels": [
+          "real",
+          "fake"
+        ],
+        "matrix": [
+          [
+            455,
+            625
+          ],
+          [
+            53,
+            1027
+          ]
+        ]
+      }
+    },
+    "tumor_removal": {
+      "n": 1890,
+      "accuracy": 0.6021164021164022,
+      "precision": 0.52217125382263,
+      "recall": 0.8432098765432099,
+      "f1": 0.6449480642115203,
+      "roc_auc": 0.6591460905349794,
+      "roc_auc_ci95": [
+        0.6350589329947793,
+        0.6832802347594593
+      ],
+      "confusion_matrix": {
+        "labels": [
+          "real",
+          "fake"
+        ],
+        "matrix": [
+          [
+            455,
+            625
+          ],
+          [
+            127,
+            683
+          ]
+        ]
+      }
+    }
+  },
+  "jpeg_held_out": {
+    "n": 2160,
+    "accuracy": 0.5009259259259259,
+    "precision": 0.5007987220447284,
+    "recall": 0.5805555555555556,
+    "f1": 0.5377358490566038,
+    "roc_auc": 0.4983830589849108,
+    "roc_auc_ci95": [
+      0.4737944927510826,
+      0.5235655580420115
+    ],
+    "confusion_matrix": {
+      "labels": [
+        "real",
+        "fake"
+      ],
+      "matrix": [
+        [
+          455,
+          625
+        ],
+        [
+          453,
+          627
+        ]
+      ]
+    }
+  },
+  "baseline_ref": "models/baseline_hist_fft.json",
+  "artifacts": {
+    "roc_curve": "metrics/ft/roc_curve.png",
+    "confusion_matrix": "metrics/ft/confusion_matrix.png",
+    "gradcam": [
+      "metrics/ft/gradcam/gradcam_0_fake_tumor_removal.png",
+      "metrics/ft/gradcam/gradcam_1_fake_copy_region.png",
+      "metrics/ft/gradcam/gradcam_2_fake_tumor_removal.png",
+      "metrics/ft/gradcam/gradcam_3_fake_gamma.png",
+      "metrics/ft/gradcam/gradcam_4_fake_gamma.png",
+      "metrics/ft/gradcam/gradcam_5_fake_copy_region.png"
+    ]
+  },
+  "notes": [
+    "Main test metrics exclude held_out JPEG rows.",
+    "jpeg_held_out evaluates JPEG fakes against test reals only.",
+    "AUC CI is 95% bootstrap with 1000 resamples."
+  ]
+}

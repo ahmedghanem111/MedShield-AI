@@ -195,12 +195,14 @@ def main():
     parser.add_argument("--checkpoint", type=str, default="models/best_model.pt")
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--out", type=str, default="metrics/metrics.json")
+    parser.add_argument("--artifacts-dir", type=str, default="metrics", help="where ROC / CM / Grad-CAM go")
     args = parser.parse_args()
 
     ensure_ai_cwd()
     set_seed(42)
-    Path("metrics").mkdir(exist_ok=True)
-    Path("metrics/gradcam").mkdir(parents=True, exist_ok=True)
+    art = Path(args.artifacts_dir)
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+    (art / "gradcam").mkdir(parents=True, exist_ok=True)
 
     dev = device()
     model, ckpt = load_checkpoint(args.checkpoint, dev)
@@ -240,7 +242,7 @@ def main():
     ax.set_title("Test ROC (usable attacks)")
     ax.legend()
     fig.tight_layout()
-    fig.savefig("metrics/roc_curve.png", dpi=140)
+    fig.savefig(art / "roc_curve.png", dpi=140)
     plt.close(fig)
 
     cm = np.array(overall["confusion_matrix"]["matrix"])
@@ -255,13 +257,13 @@ def main():
     ax.set_title("Confusion matrix (test)")
     fig.colorbar(im, ax=ax, fraction=0.046)
     fig.tight_layout()
-    fig.savefig("metrics/confusion_matrix.png", dpi=140)
+    fig.savefig(art / "confusion_matrix.png", dpi=140)
     plt.close(fig)
 
     gradcam_paths = save_gradcam_grid(
         model,
         test_df[test_df.label == "fake"],
-        Path("metrics/gradcam"),
+        art / "gradcam",
         n=6,
         dev=dev,
     )
@@ -277,8 +279,8 @@ def main():
         "jpeg_held_out": jpeg_metrics,
         "baseline_ref": "models/baseline_hist_fft.json",
         "artifacts": {
-            "roc_curve": "metrics/roc_curve.png",
-            "confusion_matrix": "metrics/confusion_matrix.png",
+            "roc_curve": (art / "roc_curve.png").as_posix(),
+            "confusion_matrix": (art / "confusion_matrix.png").as_posix(),
             "gradcam": gradcam_paths,
         },
         "notes": [

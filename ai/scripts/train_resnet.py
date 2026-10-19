@@ -4,6 +4,8 @@ ResNet18 binary real/fake trainer.
 Examples (from ai/):
   python scripts/train_resnet.py --smoke
   python scripts/train_resnet.py --epochs 8 --batch-size 32
+  python scripts/train_resnet.py --init-from models/best_model.pt --epochs 3 --lr 3e-5 \
+      --out models/best_model_ft.pt --history models/train_history_ft.json
 """
 from __future__ import annotations
 
@@ -80,6 +82,7 @@ def main():
     parser.add_argument("--smoke-n", type=int, default=512, help="per-split max rows for smoke")
     parser.add_argument("--out", type=str, default="models/best_model.pt")
     parser.add_argument("--history", type=str, default="models/train_history.json")
+    parser.add_argument("--init-from", type=str, default="", help="fine-tune from this checkpoint")
     args = parser.parse_args()
 
     ensure_ai_cwd()
@@ -108,7 +111,14 @@ def main():
 
     dev = device()
     print("device:", dev)
-    model = build_model(pretrained=True).to(dev)
+    if args.init_from:
+        model = build_model(pretrained=False)
+        init_ckpt = torch.load(args.init_from, map_location="cpu", weights_only=False)
+        model.load_state_dict(init_ckpt["state_dict"])
+        print("init from", args.init_from, "best_val_acc", init_ckpt.get("best_val_acc"))
+    else:
+        model = build_model(pretrained=True)
+    model = model.to(dev)
     criterion = nn.CrossEntropyLoss()
     opt = AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     sched = CosineAnnealingLR(opt, T_max=max(epochs, 1))
@@ -151,6 +161,8 @@ def main():
         "seed": 42,
         "smoke": bool(args.smoke),
         "epochs_ran": epochs,
+        "init_from": args.init_from or None,
+        "attacks_in_train": sorted(train_df.attack.unique().tolist()),
         "best_val_acc": best_val,
         "train_rows": int(len(train_df)),
         "val_rows": int(len(val_df)),

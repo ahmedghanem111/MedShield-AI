@@ -1,0 +1,25 @@
+{
+  "seed": 42,
+  "manifest": "metadata/manifest.csv",
+  "total_rows": 37080,
+  "held_out_rows": 1080,
+  "by_split_label": {
+    "test/fake": 4320,
+    "test/real": 1080,
+    "train/fake": 20160,
+    "train/real": 5040,
+    "val/fake": 4320,
+    "val/real": 1080
+  },
+  "attacks_in_train": [
+    "copy_region",
+    "gamma",
+    "gaussian_noise",
+    "lesion_insert",
+    "none"
+  ],
+  "held_out_attacks": [
+    "jpeg"
+  ],
+  "note": "Do not regenerate attacks or change the split after this freeze."
+}
