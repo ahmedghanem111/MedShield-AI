@@ -3,6 +3,7 @@ from app.db.database import Base, engine
 from app.db import base
 from app.api.auth_api import router as auth_router
 from app.middleware.security_headers import SecurityHeadersMiddleware
+from app.api.upload_api import router as upload_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -14,6 +15,7 @@ app = FastAPI(
 app.add_middleware(SecurityHeadersMiddleware)
 
 app.include_router(auth_router)
+app.include_router(upload_router)
 
 
 @app.get("/")
