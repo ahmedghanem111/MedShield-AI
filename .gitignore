@@ -1,17 +1,14 @@
 .cursor/plans/
 
 ai/.venv/
-ai/data/**/*.jpg
-ai/data/**/*.jpeg
-ai/data/**/*.png
+ai/data/
+ai/dataset/
 ai/fake/**/*.jpg
 ai/fake/**/*.jpeg
 ai/fake/**/*.png
-ai/models/*.pt
+ai/models/
+ai/*.pth
 ai/scripts/__pycache__
-
-
-
 
 # Python
 __pycache__/
